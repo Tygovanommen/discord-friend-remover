@@ -4,22 +4,22 @@ from src.Discord import Discord
 
 
 # Kill any existing chrome windows
-def killChrome():
+def kill_chrome():
     try:
         subprocess.check_output('taskkill /im chrome.exe 2>NUL', shell=True)
-    except:
+    except subprocess.CalledProcessError:
         pass
 
 
 discord = None
 try:
     print("Starting process...")
-    killChrome()
+    kill_chrome()
     discord = Discord()
 
     print("Attempting to open dashboard...")
-    if discord.isLoggedIn():
-        discord.searchUsers()
+    if discord.is_logged_in():
+        discord.search_users()
     else:
         print("You are not logged in. Log in before executing!")
 finally:
@@ -27,4 +27,4 @@ finally:
     try:
         discord.exit()
     except:
-        killChrome()
+        kill_chrome()
